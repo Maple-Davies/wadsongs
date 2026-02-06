@@ -3,6 +3,7 @@ import Database from "better-sqlite3";
 const db = new Database('wadsongs.db');
 const app = express();
 app.use(express.json());
+app.use(express.static('public'))
 
 app.get('/artist/:artist' ,(req, res)=> {
 	try{
@@ -53,14 +54,14 @@ app.post('/song/create', (req, res) => {
 		console.log(error);
 		res.status(500).json({error: error });
 	}
-)};
+});
 
 app.put('/song/:id', (req, res) =>{
 	try {
 		const stmt = db.prepare('UPDATE wadsongs SET price=?,quantity=? WHERE id=?');
 		const info = stmt.run (req.body.price, req.body.quantity, req.params.id);
 		if (info.changes == 1) {
-			res,status(200).json({success: true});
+			res.status(200).json({success: true});
 		}else{
 			res.status(404).json({error: "could not find song with that ID"});
 		}
@@ -74,7 +75,7 @@ app.delete('/song/:id', (req, res) =>{
 		const stmt = db.prepare('DELETE FROM wadsongs WHERE id=?');
 		const info = stmt.run (req.params.id);
 		if (info.changes == 1) {
-			res,status(200).json({success: true});
+			res.status(200).json({success: true});
 		}else{
 			res.status(404).json({error: "could not find song with that ID"});
 		}
@@ -88,7 +89,7 @@ app.put('/purchase/:id', (req, res) =>{
 		const stmt = db.prepare('UPDATE orders SET songID=?, quantity=?, userID=?, artistID=? WHERE id=?');
 		const info = stmt.run (req.body.songID, req.body.quantity, req.body.userID, req.body.artistID, req.params.id);
 		if (info.changes == 1) {
-			res,status(200).json({success: true});
+			res.status(200).json({success: true});
 		}else{
 			res.status(404).json({error: "could not find song with that ID"});
 		}
