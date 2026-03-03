@@ -12,7 +12,7 @@ document.getElementById('search')!.addEventListener('click', async()=> {
 		//	html += `Title: ${song.title} Year: ${song.year} Downloads: ${song.downloads} Price: ${song.price} Quantity: ${song.quantity} <br />`;
 		//	});
 		//	document.getElementById('htresults')!.innerHTML = html;
-		const p = document.createElement("p");
+		const p = document.getElementById('htresults') as HTMLInputElement.value;
 		const textNode = document.createTextNode(`Title: ${song.title} Year: ${song.year} Downloads: ${song.downloads} Price: ${song.price} Quantity: ${song.quantity} <br />`);
 		p.appendChild(textNode);
 		document.body.appendChild(p);
@@ -40,5 +40,6 @@ document.getElementById('submit')!.addEventListener('click', async() => {
 	} catch(e) {
 		alert(`there was an error: $(e)`);
 	}
-});		
+});
+const btn = document.createElement('button')
 
